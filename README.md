@@ -112,5 +112,5 @@ docker-compose exec web python manage.py dumpdata > fixtures.json
 
 ---
 
-### Авторы
-Никита Бурцев, Павел Липатов, Ксения Фурсова
+### Автор
+Ксения Фурсова @kcehna
