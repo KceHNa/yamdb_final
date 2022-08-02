@@ -1,6 +1,6 @@
 # API сервиса YaMDb
 
-![yamdb_workflow](https://github.com/KceHNa/yamdb_final/workflows/yamdb_workflow/badge.svg)
+![yamdb_workflow](https://github.com/KceHNa/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 ![](https://img.shields.io/badge/Python-3.7.5-blue) 
 ![](https://img.shields.io/badge/Django-2.2.16-green)
 ![](https://img.shields.io/badge/DjangoRestFramework-3.12.4-red)
