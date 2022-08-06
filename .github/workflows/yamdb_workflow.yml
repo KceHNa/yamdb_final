@@ -45,7 +45,7 @@ jobs:
           with:
             push: true
             tags: kcehna/infra:latest
-            #file: api_yamdb/Dockerfile
+            file: api_yamdb/Dockerfile
 
   deploy:
       runs-on: ubuntu-latest
