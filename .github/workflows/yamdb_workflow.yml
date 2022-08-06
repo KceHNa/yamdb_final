@@ -22,6 +22,7 @@ jobs:
     - name: Test with flake8 and django tests
       run: |
         python -m flake8
+        python -m pytest tests/
         cd api_yamdb/
         python manage.py test
 
@@ -44,6 +45,7 @@ jobs:
           with:
             push: true
             tags: kcehna/infra:latest
+            #file: api_yamdb/Dockerfile
 
   deploy:
       runs-on: ubuntu-latest
