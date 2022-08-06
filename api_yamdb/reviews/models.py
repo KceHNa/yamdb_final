@@ -1,17 +1,19 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from api_yamdb.settings import SCOPE_MAX, SCOPE_MIN
-
-ROLES_CHOICES = (
-    ('user', 'Аутентифицированный пользователь'),
-    ('moderator', 'Модератор'),
-    ('admin', 'Администратор'),
-)
-
 
 class User(AbstractUser):
+    """Пользователи."""
+    USER = 'user'
+    ADMIN = 'admin'
+    MODERATOR = 'moderator'
+    ROLES_CHOICES = (
+        (USER, 'Аутентифицированный пользователь'),
+        (MODERATOR, 'Модератор'),
+        (ADMIN, 'Администратор'),
+    )
     email = models.EmailField(unique=True)
     bio = models.TextField(
         'Биография',
@@ -141,12 +143,12 @@ class Review(models.Model):
         'Оценка',
         validators=[
             MaxValueValidator(
-                SCOPE_MAX,
-                message=f'Оценка должна быть <= {SCOPE_MAX}'
+                settings.SCOPE_MAX,
+                message=f'Оценка должна быть <= {settings.SCOPE_MAX}'
             ),
             MinValueValidator(
-                SCOPE_MIN,
-                message=f'Оценка должна быть >= {SCOPE_MIN}'
+                settings.SCOPE_MIN,
+                message=f'Оценка должна быть >= {settings.SCOPE_MIN}'
             )
         ],
         default=1,

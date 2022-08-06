@@ -1,8 +1,7 @@
+from django.conf import settings
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
-
-from api_yamdb.settings import SCOPE_MIN, SCOPE_MAX
-from reviews.models import User, Title, Review, Comment, Category, Genre
+from reviews.models import Category, Comment, Genre, Review, Title, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,10 +20,21 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = User
         fields = ('email', 'username')
 
+    def validate_username(self, value):
+        if value == 'me':
+            raise serializers.ValidationError('username не должно быть me')
+        return value
+
 
 class GetTokenSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=256)
     confirmation_code = serializers.CharField(max_length=256)
+
+    def validate(self, data):
+        user = get_object_or_404(User, username=data['username'])
+        if data['confirmation_code'] != user.confirmation_code:
+            raise serializers.ValidationError('Неверный код подтверждения')
+        return data
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -96,7 +106,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         return data
 
     def validate_score(self, value):
-        if value < SCOPE_MIN or value > SCOPE_MAX:
+        if value < settings.SCOPE_MIN or value > settings.SCOPE_MAX:
             raise serializers.ValidationError(
                 'Оценка - это целое число от 1 до 10'
             )
