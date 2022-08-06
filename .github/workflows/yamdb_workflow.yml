@@ -44,8 +44,7 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             push: true
-            tags: kcehna/infra:latest
-            file: api_yamdb/Dockerfile
+            tags: ${{ secrets.DOCKER_USERNAME }}/infra:latest
 
   deploy:
       runs-on: ubuntu-latest
