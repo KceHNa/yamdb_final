@@ -7,7 +7,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='mytestkey')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['84.201.178.226', 'localhost', 'yamdb.ditgt.ru']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
