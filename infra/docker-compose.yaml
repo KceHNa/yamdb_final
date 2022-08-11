@@ -3,35 +3,53 @@ version: '3.7'
 services:
   db:
     image: postgres:13.0-alpine
+    container_name: db
+    hostname: db
     restart: always
     volumes:
-      - /var/lib/postgresql/data/
+      - database:/var/lib/postgresql/data/
     env_file:
       - ./.env
-  web:
+    networks:
+      - localapp
+
+web:
     image: kcehna/api_yamdb:latest
+    container_name: web
+    hostname: web
     restart: always
     volumes:
       - static_value:/app/static/
       - media_value:/app/media/
     depends_on:
       - db
+    links:
+      - db
     env_file:
       - ./.env
+    networks:
+      - localapp
 
   nginx:
-    image: nginx:1.21.3-alpine
+    image: nginx:mainline-alpine
+    container_name: nginx
+    hostname: nginx
+    restart: always
     ports:
       - "80:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - static_value:/var/html/static/
       - media_value:/var/html/media/
-
     depends_on:
       - web
+    networks:
+      - localapp
 
 volumes:
   static_value:
   media_value:
   database:
+
+networks:
+  localapp:
